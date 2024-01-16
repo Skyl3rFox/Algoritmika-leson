@@ -8,6 +8,7 @@ public class Player : MonoBehaviour
 {
     public int maxHealth = 100;
     public int currentHealth;
+    public int killCount = 0;
     void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Enemy"))
