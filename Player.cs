@@ -1,31 +1,41 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Security.Cryptography.X509Certificates;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class Player : MonoBehaviour
 {
-    public int maxHealth = 100;
-    public int currentHealth;
-    public int killCount = 0;
-    void OnTriggerEnter(Collider other)
+
+    public static List<Square> squares;
+    public static int score = 0;
+
+    void Awake()
     {
-        if (other.CompareTag("Enemy"))
+        squares = new List<Square>();
+    }
+
+    void Update()
+    {
+        if(squares.Count == 0)
         {
-            TakeDamage(10);
+            Victory();
         }
     }
-    void TakeDamage(int damage)
+
+    public static void Defeat()
     {
-        currentHealth -= damage;
-        if (currentHealth <= 0)
-        {
-            Die();
-        }
+        score = 0;
+        UI.ShowDefeatPanel();
     }
-    void Die()
+
+    public static void Victory()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        UI.ShowVictoryPanel();
+    }
+
+    public static void Restart()
+    {
+        int index = SceneManager.GetActiveScene().buildIndex;
+        SceneManager.LoadScene(index);
     }
 }
